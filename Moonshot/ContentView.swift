@@ -206,9 +206,9 @@ struct ListLayout: View {
                             Image(mission.image)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 60, height: 60)
-                                .padding()
-                            
+                                .frame(width: 50, height: 50)
+                                
+                            Spacer()
                             VStack {
                                 Text(mission.displayName)
                                     .font(.headline)
@@ -216,13 +216,18 @@ struct ListLayout: View {
                                 Text(mission.formattedLaunchDate)
                                     .font(.caption)
                                     .foregroundStyle(.white.opacity(0.5))
-    
+                                
                         }
-                    }
+                   
+                        
                 }
                 .listRowBackground(Color.darkBackground)
+                }
             }
+
             .listStyle(.plain)
+
+            
             
         }
 }
