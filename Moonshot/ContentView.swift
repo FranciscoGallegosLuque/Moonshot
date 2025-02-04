@@ -192,45 +192,85 @@ struct GridLayout: View {
     }
 }
 
+//struct ListLayout: View {
+//    let astronauts: [String: Astronaut]
+//    
+//    let missions: [Mission]
+//    
+//    var body: some View {
+//            List {
+//                ForEach(missions) { mission in
+//                    NavigationLink {
+//                        MissionView(mission: mission, astronauts: astronauts)
+//                    } label: {
+//                            Image(mission.image)
+//                                .resizable()
+//                                .scaledToFit()
+//                                .frame(width: 50, height: 50)
+//                                
+//                            Spacer()
+//                            VStack {
+//                                Text(mission.displayName)
+//                                    .font(.headline)
+//                                    .foregroundStyle(.white)
+//                                Text(mission.formattedLaunchDate)
+//                                    .font(.caption)
+//                                    .foregroundStyle(.white.opacity(0.5))
+//                                
+//                        }
+//                   
+//                        
+//                }
+//                .listRowBackground(Color.darkBackground)
+//                }
+//            }
+//
+//            .listStyle(.plain)
+//
+//            
+//            
+//        }
+//}
+
 struct ListLayout: View {
     let astronauts: [String: Astronaut]
-    
     let missions: [Mission]
     
     var body: some View {
+        NavigationStack {
             List {
                 ForEach(missions) { mission in
-                    NavigationLink {
-                        MissionView(mission: mission, astronauts: astronauts)
-                    } label: {
-                            Image(mission.image)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50, height: 50)
-                                
-                            Spacer()
-                            VStack {
-                                Text(mission.displayName)
-                                    .font(.headline)
-                                    .foregroundStyle(.white)
-                                Text(mission.formattedLaunchDate)
-                                    .font(.caption)
-                                    .foregroundStyle(.white.opacity(0.5))
-                                
-                        }
-                   
+                    NavigationLink (value: mission) {
+                        Image(mission.image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 50, height: 50)
                         
+                        Spacer()
+                        VStack {
+                            Text(mission.displayName)
+                                .font(.headline)
+                                .foregroundStyle(.white)
+                            Text(mission.formattedLaunchDate)
+                                .font(.caption)
+                                .foregroundStyle(.white.opacity(0.5))
+                            }
+                        }
+                    .listRowBackground(Color.darkBackground)
+                    }
+                
                 }
-                .listRowBackground(Color.darkBackground)
-                }
+        .listStyle(.plain)
+        .navigationDestination(for: Mission.self) {
+            mission in
+            MissionView(mission: mission, astronauts: astronauts)
             }
-
-            .listStyle(.plain)
-
-            
-            
         }
+        .background(.darkBackground)
+        .preferredColorScheme(.dark)
+    }
 }
+
 
 struct ContentView: View {
     let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
